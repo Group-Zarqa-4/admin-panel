@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -56,18 +58,18 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
+    name: "Users",
+    key: "users",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
+    route: "/users",
     component: <Tables />,
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
+    name: "Comments",
+    key: "comments",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
+    route: "/comments",
     component: <Billing />,
   },
   {

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -35,7 +37,7 @@ function Tables() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
+      <MDBox style={{ paddingTop: "2rem" }}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
             <Card>
@@ -50,7 +52,7 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Authors Table
+                  Users Table
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
