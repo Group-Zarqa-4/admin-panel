@@ -43,7 +43,7 @@ import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
-import Stories from "../src/layouts/Stories/Components/Stories.jsx"
+import Stories from "../src/layouts/Stories/Stories.jsx"
 
 // @mui icons
 import Icon from "@mui/material/Icon";

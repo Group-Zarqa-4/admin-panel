@@ -6,7 +6,7 @@ import DashboardNavbar from 'examples/Navbars/DashboardNavbar'
 import React from 'react'
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import CustomPaginationActionsTable from './CustomPaginationActionsTable'
+import CustomPaginationActionsTable from '../Stories/Components/CustomPaginationActionsTable'
 import MDTypography from 'components/MDTypography';
 
 function Stories() {
