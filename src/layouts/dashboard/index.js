@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -29,6 +31,9 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+import { useEffect } from "react";
+import * as React from "react";
+import axios from "axios";
 
 // Dashboard components
 // import Projects from "layouts/dashboard/components/Projects";
@@ -36,7 +41,30 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const [users, setUsers] = React.useState([]);
+  const [stories, setstories] = React.useState([]);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/users")
+      .then((res) => {
+        // console.log(res.data);
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get("http://localhost:8000/api/stories")
+      .then((res) => {
+        // console.log(res.data);
+        setstories(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -48,7 +76,7 @@ function Dashboard() {
                 color="primary"
                 icon="person_add"
                 title="Users"
-                count="91"
+                count={users.length}
                 percentage={
                   {
                     // color: "success",
@@ -65,7 +93,7 @@ function Dashboard() {
                 color="dark"
                 icon="weekend"
                 title="Stories"
-                count={281}
+                count={stories.length}
                 percentage={
                   {
                     // color: "success",

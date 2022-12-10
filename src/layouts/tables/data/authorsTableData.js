@@ -25,6 +25,8 @@ import MDBadge from "components/MDBadge";
 import * as React from "react";
 import { Link } from "@mui/material";
 import { Box } from "@mui/material";
+import { useEffect } from "react";
+import axios from "axios";
 // import { useCallback } from "react";
 
 // import DialogActions from "@mui/material/DialogActions";
@@ -45,18 +47,62 @@ const style = {
 };
 
 export default function data() {
-  // const
-  function handleSubmit() {}
-
-  function handleDelete(id) {
+  const [users, setUsers] = React.useState([]);
+  const [userName, setUserName] = React.useState("");
+  const [userEmail, setUserEmail] = React.useState("");
+  const [role, setRole] = React.useState("");
+  useEffect(() => {
     axios
-      .delete(`http://localhost:8000/api/deleteuser/${id}`)
+      .get("http://localhost:8000/api/users")
       .then((res) => {
+        // console.log(res.data);
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  // console.log(users);
+  // console.log(userName);
+  // console.log(userEmail);
+  // console.log(role);
+
+  // const
+  function handleSubmit(event, id) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    data.append("name", userName);
+    data.append("email", userEmail);
+    data.append("role", role);
+    axios
+      .post(`http://localhost:8000/api/edituser/${id}`, data)
+      .then((res) => {
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 100);
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function handleDelete(id) {
+    if (confirm("Are you sure you want to delete")) {
+      axios
+        .delete(`http://localhost:8000/api/deleteuser/${id}`)
+        .then((res) => {
+          console.log(res);
+
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 100);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -70,159 +116,130 @@ export default function data() {
     </MDBox>
   );
 
-  const Job = ({ title, description }) => (
-    <MDBox lineHeight={1} textAlign="left">
-      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {title}
-      </MDTypography>
-      <MDTypography variant="caption">{description}</MDTypography>
-    </MDBox>
-  );
-
   return {
     columns: [
       { Header: "Username", accessor: "Username", width: "45%", align: "left" },
-      { Header: "Password", accessor: "Password", align: "left" },
-      { Header: "status", accessor: "status", align: "center" },
+      { Header: "ID", accessor: "status", align: "center" },
       { Header: "Role", accessor: "Role", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: [
-      {
-        Username: <Author image="" name="Miriam Eric" email="miriam@creative-tim.com" />,
-        Password: <Job title="Programator" description="Developer" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
-          </MDBox>
-        ),
+    rows: users?.map((user) => {
+      return {
+        Username: <Author image={`${user.image}`} name={`${user.name}`} email={`${user.email}`} />,
+        status: <MDBox ml={-1}>{user.id}</MDBox>,
         Role: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            14/09/20
+            {user.role}
           </MDTypography>
         ),
         action: (
           <>
-            <div class="d-flex flex-row-reverse mt-3">
-              <p class="">
+            <div className="d-flex flex-row-reverse mt-3">
+              <p className="">
                 <button
-                  onClick={(e) => handleDelete(id)}
+                  onClick={(e) => handleDelete(user.id)}
                   type="button"
-                  class="btn btn-danger text-white text-decoration-nsone m-1"
+                  className="btn btn-danger text-white text-decoration-nsone m-1"
                 >
                   Delete
                 </button>
                 <Link
                   type="button"
-                  class="btn btn-info text-white text-decoration-nsone m-1"
+                  className="btn btn-info text-white text-decoration-nsone m-1"
                   data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
+                  data-bs-target={`#exampleModal${user.id}`}
                 >
                   Edit
                 </Link>
               </p>
 
               <div
-                class="modal fade"
-                id="exampleModal"
+                className="modal fade"
+                id={`exampleModal${user.id}`}
                 tabindex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
               >
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                  <div class="modal-dialog">
-                    <div class="modal-content p-5">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                          Publish new Tour
+                <Box
+                  component="form"
+                  noValidate
+                  onSubmit={(e) => handleSubmit(e, user.id)}
+                  sx={{ mt: 3 }}
+                >
+                  <div className="modal-dialog">
+                    <div className="modal-content p-5">
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="exampleModalLabel">
+                          Edit User info
                         </h1>
                         <button
                           type="button"
-                          class="btn-close"
+                          className="btn-close"
                           data-bs-dismiss="modal"
                           aria-label="Close"
                         ></button>
                       </div>
-                      <div class="modal-body">
-                        <form onSubmit={handleSubmit}>
-                          <label for="select" class="form-label">
-                            Select Desitination
+                      <div className="modal-body">
+                        {/* <form onSubmit={handleSubmit}> */}
+                        <div className="mb-3">
+                          <label for="username" className="form-label">
+                            User Name
                           </label>
+                          <input
+                            type="text"
+                            name="name"
+                            className="form-control"
+                            id="username"
+                            // value={user.name}
+                            onChange={(e) => {
+                              setUserName(e.target.value);
+                            }}
+                          />
+                        </div>
 
-                          <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">
-                              Date
-                            </label>
-                            <input
-                              type="date"
-                              name="tour_date"
-                              class="form-control"
-                              id="exampleInputPassword1"
-                            />
-                          </div>
-
-                          <div class="mb-3">
-                            <label for="Price" class="form-label">
-                              Price(JOD)
-                            </label>
-                            <input
-                              onChange={(e) => {
-                                setPrice(e.target.value);
-                              }}
-                              type="number"
-                              name="tour_price"
-                              class="form-control"
-                              id="Price"
-                            />
-                          </div>
-                          <div class="mb-3">
-                            <label for="route" class="form-label">
-                              Tour Route(Map Link)
-                            </label>
-                            <input
-                              onChange={(e) => {
-                                setRoute(e.target.value);
-                              }}
-                              type="text"
-                              name="tour_route"
-                              class="form-control"
-                              id="route"
-                            />
-                          </div>
-
-                          <div class="mb-3">
-                            <label for="heroimg" class="form-label">
-                              Contact Number
-                            </label>
-                            <input
-                              onChange={(e) => {
-                                setNumber(e.target.value);
-                              }}
-                              name="advisor_contact_number"
-                              type="number"
-                              class="form-control"
-                              id="heroimg"
-                            />
-                          </div>
-
-                          <div class="mb-3">
-                            <label for="heroimg" class="form-label">
-                              Hero image
-                            </label>
-                          </div>
-                        </form>
+                        <div className="mb-3">
+                          <label for="email" className="form-label">
+                            Email
+                          </label>
+                          <input
+                            onChange={(e) => {
+                              setUserEmail(e.target.value);
+                            }}
+                            type="email"
+                            name="email"
+                            className="form-control"
+                            id="email"
+                            // value={user.email}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label for="role" className="form-label">
+                            Role
+                          </label>
+                          <input
+                            onChange={(e) => {
+                              setRole(e.target.value);
+                            }}
+                            type="text"
+                            name="role"
+                            className="form-control"
+                            id="role"
+                            // value={user.role}
+                          />
+                        </div>
+                        {/* </form> */}
                       </div>
-                      <div class="modal-footer">
+                      <div className="modal-footer">
                         <button
                           type="button"
-                          class="btn btn-secondary publishTourBtn"
+                          className="btn btn-secondary publishTourBtn"
                           data-bs-dismiss="modal"
                         >
                           Close
                         </button>
-                        <button type="submit" class="btn btn-primary publishTourBtn">
-                          Publish Tour
+                        <button type="submit" className="btn btn-primary publishTourBtn">
+                          Submit
                         </button>
                       </div>
                     </div>
@@ -232,7 +249,7 @@ export default function data() {
             </div>
           </>
         ),
-      },
-    ],
+      };
+    }),
   };
 }

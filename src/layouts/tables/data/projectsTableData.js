@@ -25,84 +25,132 @@ import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
 import { Link } from "@mui/material";
 import axios from "axios";
+import * as React from "react";
+import { useEffect } from "react";
+import { Box } from "@mui/material";
+
 // Images
 
 export default function data() {
-  function handleDelete(id) {
+  const [comments, setComments] = React.useState([]);
+
+  useEffect(() => {
     axios
-      .delete(`http://localhost:8000/api/deleteuser/${id}`)
+      .get("http://localhost:8000/api/comments")
       .then((res) => {
-        console.log(res);
+        // console.log(res.data);
+        setComments(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
-  const Project = ({ image, name }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" variant="rounded" />
-      <MDTypography display="block" variant="button" fontWeight="medium" ml={1} lineHeight={1}>
-        {name}
-      </MDTypography>
-    </MDBox>
-  );
+  }, []);
+  console.log(comments);
+  function handleDelete(id) {
+    if (confirm("Are you sure you want to delete")) {
+      axios
+        .delete(`http://localhost:8000/api/deletecomment/${id}`)
+        .then((res) => {
+          console.log(res);
 
-  const Progress = ({ color, value }) => (
-    <MDBox display="flex" alignItems="center">
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {value}%
-      </MDTypography>
-      <MDBox ml={0.5} width="9rem">
-        <MDProgress variant="gradient" color={color} value={value} />
-      </MDBox>
-    </MDBox>
-  );
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 100);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
 
   return {
     columns: [
-      { Header: "ID", accessor: "ID", width: "30%", align: "left" },
-      { Header: "UserName", accessor: "UserName", align: "left" },
-      { Header: "Date", accessor: "Date", align: "center" },
-      { Header: "Description", accessor: "Description", align: "center" },
+      { Header: "ID", accessor: "ID", width: "45%", align: "left" },
+      { Header: "userid", accessor: "userid", align: "center" },
+      { Header: "storyid", accessor: "storyid", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: [
-      {
-        ID: <Project image="" name="Asana" />,
-        UserName: (
-          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            $2,500
-          </MDTypography>
-        ),
-        Date: (
+    rows: comments?.map((comment) => {
+      return {
+        ID: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            working
+            {comment.id}
           </MDTypography>
         ),
-        Description: <Progress color="info" value={60} />,
+        userid: <MDBox ml={-1}>{comment.user_id}</MDBox>,
+        storyid: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {comment.story_id}
+          </MDTypography>
+        ),
         action: (
           <>
-            <p class="">
-              <button
-                type="button"
-                onClick={(e) => handleDelete(id)}
-                class="btn btn-danger text-white text-decoration-nsone m-1"
+            <div className="d-flex flex-row-reverse mt-3">
+              <p className="">
+                <button
+                  onClick={(e) => handleDelete(comment.id)}
+                  type="button"
+                  className="btn btn-danger text-white text-decoration-nsone m-1"
+                >
+                  Delete
+                </button>
+                <Link
+                  type="button"
+                  className="btn btn-warning text-white text-decoration-nsone m-1"
+                  data-bs-toggle="modal"
+                  data-bs-target={`#exampleModal${comment.id}`}
+                >
+                  View
+                </Link>
+              </p>
+
+              <div
+                className="modal fade"
+                id={`exampleModal${comment.id}`}
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
               >
-                Delete
-              </button>
-              <Link
-                type="button"
-                class="btn btn-info text-white text-decoration-nsone m-1"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                Edit
-              </Link>
-            </p>
+                <Box
+                  component="form"
+                  noValidate
+                  onSubmit={(e) => handleSubmit(e, comment.id)}
+                  sx={{ mt: 3 }}
+                >
+                  <div className="modal-dialog">
+                    <div className="modal-content p-5">
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="exampleModalLabel">
+                          Comment description
+                        </h1>
+                        <button
+                          type="button"
+                          className="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div className="modal-body">
+                        <div className="mb-3">{comment.content}</div>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-secondary publishTourBtn"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Box>
+              </div>
+            </div>
           </>
         ),
-      },
-    ],
+      };
+    }),
   };
 }
