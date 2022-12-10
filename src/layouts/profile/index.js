@@ -45,6 +45,7 @@ import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 import axios from "axios";
 import { useEffect,useState } from "react";
+import EditProfile from "./components/Editpage/EditProfile";
 function Overview() {
 const [user, setUser] = useState("")
 
@@ -83,7 +84,7 @@ useEffect(() => {
                   email: user.email,
                   location: "",
                 }}
-                action={{ route: "", tooltip: "Edit Profile" }}
+                action={{ route:"/EditProfile" , tooltip: "Edit Profile" }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />

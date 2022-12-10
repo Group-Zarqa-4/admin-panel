@@ -48,6 +48,7 @@ import Stories from "../src/layouts/Stories/Stories.jsx"
 // @mui icons
 import Icon from "@mui/material/Icon";
 import ArticleIcon from '@mui/icons-material/Article';
+import EditProfile from "layouts/profile/components/Editpage/EditProfile.jsx";
 
 const routes = [
   {
@@ -97,6 +98,10 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
+  },
+  {
+    route: "/EditProfile",
+    component: <EditProfile/> ,
   },
 ];
 
