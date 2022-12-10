@@ -84,7 +84,7 @@ useEffect(() => {
                   email: user.email,
                   location: "",
                 }}
-                action={{ route:"/EditProfile" , tooltip: "Edit Profile" }}
+                action={{ route:`/EditProfile/${parseInt(user.id)}` , tooltip: "Edit Profile" }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />

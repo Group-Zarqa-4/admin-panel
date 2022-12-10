@@ -100,7 +100,7 @@ const routes = [
     component: <SignIn />,
   },
   {
-    route: "/EditProfile",
+    route: "/EditProfile/:id",
     component: <EditProfile/> ,
   },
 ];

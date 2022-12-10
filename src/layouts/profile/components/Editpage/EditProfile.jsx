@@ -17,7 +17,7 @@ function EditProfile(props) {
     data.append("email", userEmail);
     data.append("role", role);
     axios
-      .put(`http://localhost:8000/api/edituser/${id}`, data)
+      .put(`http://localhost:8000/api/edituser/${props.id}`, data)
       .then((res) => {
         setTimeout(() => {
           window.location.reload(false);
@@ -31,7 +31,7 @@ function EditProfile(props) {
     return (
         <DashboardLayout>
         <DashboardNavbar />
-    <div className="container">
+    <div className="container w-50">
       <Box  component="form" noValidate onSubmit={(e) => handleEdit(e, user.id)} sx={{ mt: 3 }}>
         <div className="">
           <h1 className="" id="">
