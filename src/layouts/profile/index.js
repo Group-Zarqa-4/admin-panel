@@ -37,9 +37,7 @@ import Header from "layouts/profile/components/Header";
 
 // Data
 // Images
-import homeDecor1 from "assets/images/home-decor-1.jpg";
-import homeDecor2 from "assets/images/home-decor-2.jpg";
-import homeDecor3 from "assets/images/home-decor-3.jpg";
+
 import homeDecor4 from "assets/images/home-decor-4.jpeg";
 import team1 from "assets/images/team-1.jpg";
 import team2 from "assets/images/team-2.jpg";
@@ -67,7 +65,7 @@ useEffect(() => {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mb={2} />
-      <Header person={user.name}>
+      <Header person={user.name} role={user.role} image={user.image}>
         <MDBox mt={5} mb={3}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
