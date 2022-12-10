@@ -8,6 +8,8 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CustomPaginationActionsTable from '../Stories/Components/CustomPaginationActionsTable'
 import MDTypography from 'components/MDTypography';
+import { Search } from '@mui/icons-material';
+import SearchStory from './Components/SearchStory';
 
 function Stories() {
   return (
@@ -32,7 +34,12 @@ function Stories() {
               Stories Table
             </MDTypography>
           </MDBox>
-          <MDBox pt={3}>
+              <MDBox pt={3}>
+              <MDBox pt={3}>
+
+                <SearchStory/>
+             
+                  </MDBox>
         <MDBox mb={6} />
                 <CustomPaginationActionsTable />
                 </MDBox>
