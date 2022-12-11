@@ -42,7 +42,7 @@ import axios from "axios";
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [users, setUsers] = React.useState([]);
-  const [stories, setstories] = React.useState([]);
+  const [stories, setStories] = React.useState([]);
 
   useEffect(() => {
     axios
@@ -58,8 +58,8 @@ function Dashboard() {
     axios
       .get("http://localhost:8000/api/stories")
       .then((res) => {
-        // console.log(res.data);
-        setstories(res.data);
+        console.log(res.data);
+        setStories(res.data.stories);
       })
       .catch((err) => {
         console.log(err);
