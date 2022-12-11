@@ -51,6 +51,8 @@ export default function data() {
   const [userName, setUserName] = React.useState("");
   const [userEmail, setUserEmail] = React.useState("");
   const [role, setRole] = React.useState("");
+  const [premium, setPremium] = React.useState("");
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/users")
@@ -75,8 +77,13 @@ export default function data() {
     data.append("name", userName);
     data.append("email", userEmail);
     data.append("role", role);
+    data.append("is_premium", premium);
+
+    // console.log(data.get("role"));
+    // console.log(data.get("is_premium"));
+
     axios
-      .post(`http://localhost:8000/api/edituser/${id}`, data)
+      .post(`http://localhost:8000/api/updateuser/${id}`, data)
       .then((res) => {
         setTimeout(() => {
           window.location.reload(false);
@@ -217,7 +224,20 @@ export default function data() {
                           <label for="role" className="form-label">
                             Role
                           </label>
-                          <input
+
+                          <select
+                            name="role"
+                            id="role"
+                            class="form-control"
+                            onChange={(e) => setRole(e.target.value)}
+                          >
+                            <option value="Select Premium" disabled selected hidden>
+                              Select Role
+                            </option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                          </select>
+                          {/* <input
                             onChange={(e) => {
                               setRole(e.target.value);
                             }}
@@ -226,7 +246,25 @@ export default function data() {
                             className="form-control"
                             id="role"
                             // value={user.role}
-                          />
+                          /> */}
+                        </div>
+
+                        <div className="mb-3">
+                          <label for="premium" className="form-label">
+                            premium
+                          </label>
+                          <select
+                            name="premium"
+                            id="premium"
+                            class="form-control"
+                            onChange={(e) => setPremium(e.target.value)}
+                          >
+                            <option value="Select Premium" disabled selected hidden>
+                              Select Premium
+                            </option>
+                            <option value={1}>Yes</option>
+                            <option value={0}>No</option>
+                          </select>
                         </div>
                         {/* </form> */}
                       </div>
