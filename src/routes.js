@@ -43,7 +43,9 @@ import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
-import Stories from "../src/layouts/Stories/Stories.jsx"
+import Stories from "../src/layouts/Stories/tables"
+import Posts from "../src/layouts/Posts/tables"
+
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -82,6 +84,14 @@ const routes = [
    icon:<ArticleIcon/>,
     route: "/Stories",
     component: <Stories/>,
+  },
+  {
+    type: "collapse",
+    name: "Posts",
+    key: "Posts",
+   icon:<ArticleIcon/>,
+    route: "/Posts",
+    component: <Posts/>,
   },
   {
     type: "collapse",

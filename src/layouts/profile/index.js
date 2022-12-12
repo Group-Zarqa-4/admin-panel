@@ -30,7 +30,6 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
@@ -38,19 +37,14 @@ import Header from "layouts/profile/components/Header";
 // Data
 // Images
 
-import homeDecor4 from "assets/images/home-decor-4.jpeg";
-import team1 from "assets/images/team-1.jpg";
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
+
 import axios from "axios";
 import { useEffect,useState } from "react";
-import EditProfile from "./components/Editpage/EditProfile";
 function Overview() {
 const [user, setUser] = useState("")
 
 useEffect(() => {
-  axios.get("http://127.0.0.1:8000/api/users/6")
+  axios.get("http://127.0.0.1:8000/api/users/1")
 .then(res => {
   console.log(res.data)
   setUser(res.data)
@@ -84,44 +78,10 @@ useEffect(() => {
                   email: user.email,
                   location: "",
                 }}
-                action={{ route:`/EditProfile/${parseInt(user.id)}` , tooltip: "Edit Profile" }}
+                action={{ route:`/EditProfile/${user.id}` , tooltip: "Edit Profile" }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox pt={2} px={2} lineHeight={1.25}>
-          <MDTypography variant="h6" fontWeight="medium">
-            Projects
-          </MDTypography>
-          <MDBox mb={1}>
-            <MDTypography variant="button" color="text">
-              Stories
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDBox p={2}>
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={6} xl={3}>
-              <DefaultProjectCard
-                image={homeDecor4}
-                label="project #4"
-                title="gothic"
-                description="Why would anyone pick blue over pink? Pink is obviously a better color."
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                authors={[
-                  { image: team4, name: "Peterson" },
-                  { image: team3, name: "Nick Daniel" },
-                  { image: team2, name: "Ryan Milly" },
-                  { image: team1, name: "Elena Morison" },
-                ]}
-              />
             </Grid>
           </Grid>
         </MDBox>
