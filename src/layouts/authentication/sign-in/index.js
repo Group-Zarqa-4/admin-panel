@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -66,17 +68,14 @@ function Basic() {
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <FacebookIcon color="inherit" />
               </MDTypography>
             </Grid>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GitHubIcon color="inherit" />
               </MDTypography>
             </Grid>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GoogleIcon color="inherit" />
               </MDTypography>
             </Grid>
           </Grid>
@@ -90,16 +89,6 @@ function Basic() {
               <MDInput type="password" label="Password" fullWidth />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth>
@@ -107,19 +96,6 @@ function Basic() {
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/authentication/sign-up"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Sign up
-                </MDTypography>
-              </MDTypography>
             </MDBox>
           </MDBox>
         </MDBox>
