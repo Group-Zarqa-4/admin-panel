@@ -49,7 +49,7 @@ export default function data() {
   function handleDelete(id) {
     if (confirm("Are you sure you want to delete")) {
       axios
-        .delete(`http://localhost:8000/api/deletecomment/${id}`)
+        .delete(`http://localhost:8000/api/deleteComment/${id}`)
         .then((res) => {
           console.log(res);
 

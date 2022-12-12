@@ -38,8 +38,8 @@ export default function data() {
     axios
       .get("http://localhost:8000/api/stories")
       .then((res) => {
-        // console.log(res.data);
-        setStory(res.data);
+        console.log(res.data);
+        setStory(res.data.stories);
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +52,6 @@ export default function data() {
         .delete(`http://localhost:8000/api/deleteStory/${id}`)
         .then((res) => {
           console.log(res);
-
           setTimeout(() => {
             window.location.reload(false);
           }, 100);
@@ -66,22 +65,22 @@ export default function data() {
   return {
     columns: [
       { Header: "ID", accessor: "ID", width: "45%", align: "left" },
-      { Header: "userid", accessor: "userid", align: "center" },
-      { Header: "storyid", accessor: "storyid", align: "center" },
+      { Header: "Title", accessor: "userid", align: "center" },
+      { Header: "Author", accessor: "storyid", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: Story?.map((story) => {
+    rows: Story?.map((comment) => {
       return {
         ID: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {story.id}
+            {comment.id}
           </MDTypography>
         ),
-        userid: <MDBox ml={-1}>{story.user_id}</MDBox>,
+        userid: <MDBox ml={-1}>{comment.title}</MDBox>,
         storyid: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {story.story_id}
+            {comment.author}
           </MDTypography>
         ),
         action: (
@@ -89,7 +88,7 @@ export default function data() {
             <div className="d-flex flex-row-reverse mt-3">
               <p className="">
                 <button
-                  onClick={(e) => handleDelete(story.id)}
+                  onClick={(e) => handleDelete(comment.id)}
                   type="button"
                   className="btn btn-danger text-white text-decoration-nsone m-1"
                 >
@@ -99,7 +98,7 @@ export default function data() {
                   type="button"
                   className="btn btn-warning text-white text-decoration-nsone m-1"
                   data-bs-toggle="modal"
-                  data-bs-target={`#exampleModal${story.id}`}
+                  data-bs-target={`#exampleModal${comment.id}`}
                 >
                   View
                 </Link>
@@ -107,7 +106,7 @@ export default function data() {
 
               <div
                 className="modal fade"
-                id={`exampleModal${story.id}`}
+                id={`exampleModal${comment.id}`}
                 tabindex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
@@ -115,14 +114,14 @@ export default function data() {
                 <Box
                   component="form"
                   noValidate
-                  onSubmit={(e) => handleSubmit(e, story.id)}
+                  onSubmit={(e) => handleSubmit(e, comment.id)}
                   sx={{ mt: 3 }}
                 >
                   <div className="modal-dialog">
                     <div className="modal-content p-5">
                       <div className="modal-header">
                         <h1 className="modal-title fs-5" id="exampleModalLabel">
-                          story description
+                          Story Content
                         </h1>
                         <button
                           type="button"
@@ -132,7 +131,7 @@ export default function data() {
                         ></button>
                       </div>
                       <div className="modal-body">
-                        <div className="mb-3">{story.content}</div>
+                        <div className="mb-3">{comment.pages[0].text}</div>
                       </div>
                       <div className="modal-footer">
                         <button
