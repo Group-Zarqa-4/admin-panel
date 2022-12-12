@@ -45,6 +45,8 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import Stories from "../src/layouts/Stories/tables"
 import Posts from "../src/layouts/Posts/tables"
+import Contactus from "../src/layouts/Contactus/tables"
+
 
 
 // @mui icons
@@ -92,6 +94,14 @@ const routes = [
    icon:<ArticleIcon/>,
     route: "/Posts",
     component: <Posts/>,
+  },
+  {
+    type: "collapse",
+    name: "Inquiries",
+    key: "Inquiries",
+   icon:<ArticleIcon/>,
+    route: "/Inquiries",
+    component: <Contactus/>,
   },
   {
     type: "collapse",
