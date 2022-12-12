@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -37,14 +39,7 @@ function DefaultNavbarLink({ icon, name, route, light }) {
       alignItems="center"
       sx={{ cursor: "pointer", userSelect: "none" }}
     >
-      <Icon
-        sx={{
-          color: ({ palette: { white, secondary } }) => (light ? white.main : secondary.main),
-          verticalAlign: "middle",
-        }}
-      >
-        {icon}
-      </Icon>
+     
       <MDTypography
         variant="button"
         fontWeight="regular"

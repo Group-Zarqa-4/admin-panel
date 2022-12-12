@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -108,27 +110,13 @@ function DefaultNavbar({ transparent, light, action }) {
           py={transparent ? 1.5 : 0.75}
           lineHeight={1}
           pl={{ xs: 0, lg: 1 }}
+          align="center" 
         >
           <MDTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-            Material Dashboard 2
+            Junior Dashboard 
           </MDTypography>
         </MDBox>
-        <MDBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
-          <DefaultNavbarLink icon="donut_large" name="dashboard" route="/dashboard" light={light} />
-          <DefaultNavbarLink icon="person" name="profile" route="/profile" light={light} />
-          <DefaultNavbarLink
-            icon="account_circle"
-            name="sign up"
-            route="/authentication/sign-up"
-            light={light}
-          />
-          <DefaultNavbarLink
-            icon="key"
-            name="sign in"
-            route="/authentication/sign-in"
-            light={light}
-          />
-        </MDBox>
+   
         {action &&
           (action.type === "internal" ? (
             <MDBox display={{ xs: "none", lg: "inline-block" }}>
@@ -144,33 +132,11 @@ function DefaultNavbar({ transparent, light, action }) {
             </MDBox>
           ) : (
             <MDBox display={{ xs: "none", lg: "inline-block" }}>
-              <MDButton
-                component="a"
-                href={action.route}
-                target="_blank"
-                rel="noreferrer"
-                variant="gradient"
-                color={action.color ? action.color : "info"}
-                size="small"
-                sx={{ mt: -0.3 }}
-              >
-                {action.label}
-              </MDButton>
+            
             </MDBox>
           ))}
-        <MDBox
-          display={{ xs: "inline-block", lg: "none" }}
-          lineHeight={0}
-          py={1.5}
-          pl={1.5}
-          color="inherit"
-          sx={{ cursor: "pointer" }}
-          onClick={openMobileNavbar}
-        >
-          <Icon fontSize="default">{mobileNavbar ? "close" : "menu"}</Icon>
+        
         </MDBox>
-      </MDBox>
-      {mobileView && <DefaultNavbarMobile open={mobileNavbar} close={closeMobileNavbar} />}
     </Container>
   );
 }

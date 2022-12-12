@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -32,14 +34,7 @@ import Footer from "layouts/authentication/components/Footer";
 function BasicLayout({ image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar
-        action={{
-          type: "external",
-          route: "https://creative-tim.com/product/material-dashboard-react",
-          label: "free download",
-          color: "dark",
-        }}
-      />
+      <DefaultNavbar/>
       <MDBox
         position="absolute"
         width="100%"
@@ -63,7 +58,6 @@ function BasicLayout({ image, children }) {
           </Grid>
         </Grid>
       </MDBox>
-      <Footer light />
     </PageLayout>
   );
 }

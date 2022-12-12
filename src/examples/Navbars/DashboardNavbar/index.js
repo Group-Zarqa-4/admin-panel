@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -135,9 +137,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <MDBox pr={1}>
-              <MDInput label="Search here" />
-            </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
               <IconButton
                 size="small"
