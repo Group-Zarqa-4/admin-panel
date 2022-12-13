@@ -53,8 +53,6 @@ export default function data() {
       axios
         .delete(`http://localhost:8000/api/deletePost/${id}`)
         .then((res) => {
-          console.log(res);
-
           setTimeout(() => {
             window.location.reload(false);
           }, 100);
@@ -67,8 +65,7 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "ID", accessor: "ID", width: "45%", align: "left" },
-      { Header: "User Name", accessor: "Userid", align: "center" },
+      { Header: "Name", accessor: "ID", width: "45%", align: "left" },
       { Header: "Post", accessor: "storyid", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
@@ -77,13 +74,13 @@ export default function data() {
       return {
         ID: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {x.id}
+            {x.post.user.name}
           </MDTypography>
         ),
-        userid: <MDBox ml={-1}>{x.user_id}</MDBox>,
+        userid: <MDBox ml={-1}>{x.post.user.avatar}</MDBox>,
         storyid: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {x.content}
+            {x.post.user.email}
           </MDTypography>
         ),
         action: (
@@ -91,7 +88,7 @@ export default function data() {
             <div className="d-flex flex-row-reverse mt-3">
               <p className="">
                 <button
-                  onClick={(e) => handleDelete(x.id)}
+                  onClick={(e) => handleDelete(x.post.id)}
                   type="button"
                   className="btn btn-danger text-white text-decoration-nsone m-1"
                 >
@@ -134,7 +131,7 @@ export default function data() {
                         ></button>
                       </div>
                       <div className="modal-body">
-                        <div className="mb-3">{x.content}</div>
+                        <div className="mb-3">{x.post.content}</div>
                       </div>
                       <div className="modal-footer">
                         <button

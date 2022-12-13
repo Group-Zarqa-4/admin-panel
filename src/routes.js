@@ -116,7 +116,7 @@ const routes = [
     name: "Sign out",
     key: "sign-out",
     icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
+    route:"",
     component: <SignIn />,
   },
   {
