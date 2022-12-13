@@ -45,6 +45,8 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import Stories from "../src/layouts/Stories/tables"
 import Posts from "../src/layouts/Posts/tables"
+import Contactus from "../src/layouts/Contactus/tables"
+
 
 
 // @mui icons
@@ -95,6 +97,14 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Inquiries",
+    key: "Inquiries",
+   icon:<ArticleIcon/>,
+    route: "/Inquiries",
+    component: <Contactus/>,
+  },
+  {
+    type: "collapse",
     name: "Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
@@ -103,10 +113,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Sign In",
-    key: "sign-in",
+    name: "Sign out",
+    key: "sign-out",
     icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
+    route:"",
     component: <SignIn />,
   },
   {

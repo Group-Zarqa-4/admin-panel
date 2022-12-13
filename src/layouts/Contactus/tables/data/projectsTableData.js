@@ -32,27 +32,27 @@ import { Box } from "@mui/material";
 // Images
 
 export default function data() {
-  const [posts, setPost] = React.useState([]);
+  const [Story, setStory] = React.useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/posts")
+      .get("http://localhost:8000/api/stories")
       .then((res) => {
         // console.log(res.data);
-        setPost(res.data);
-        console.log(res.data.posts);
-        
+        setStory(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  console.log(posts);
+  console.log(Story);
   function handleDelete(id) {
     if (confirm("Are you sure you want to delete")) {
       axios
-        .delete(`http://localhost:8000/api/deletePost/${id}`)
+        .delete(`http://localhost:8000/api/deleteStory/${id}`)
         .then((res) => {
+          console.log(res);
+
           setTimeout(() => {
             window.location.reload(false);
           }, 100);
@@ -65,22 +65,23 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "Name", accessor: "ID", width: "45%", align: "left" },
-      { Header: "Post", accessor: "storyid", align: "center" },
+      { Header: "ID", accessor: "ID", width: "45%", align: "left" },
+      { Header: "userid", accessor: "userid", align: "center" },
+      { Header: "storyid", accessor: "storyid", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: posts?.map((x,array) => {
+    rows: Story?.map((story) => {
       return {
         ID: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {x.post.user.name}
+            {story.id}
           </MDTypography>
         ),
-        userid: <MDBox ml={-1}>{x.post.user.avatar}</MDBox>,
+        userid: <MDBox ml={-1}>{story.user_id}</MDBox>,
         storyid: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {x.post.user.email}
+            {story.story_id}
           </MDTypography>
         ),
         action: (
@@ -88,7 +89,7 @@ export default function data() {
             <div className="d-flex flex-row-reverse mt-3">
               <p className="">
                 <button
-                  onClick={(e) => handleDelete(x.post.id)}
+                  onClick={(e) => handleDelete(story.id)}
                   type="button"
                   className="btn btn-danger text-white text-decoration-nsone m-1"
                 >
@@ -98,15 +99,15 @@ export default function data() {
                   type="button"
                   className="btn btn-warning text-white text-decoration-nsone m-1"
                   data-bs-toggle="modal"
-                  data-bs-target={`#exampleModal${x.id}`}
+                  data-bs-target={`#exampleModal${story.id}`}
                 >
-                  View Post
+                  View
                 </Link>
               </p>
 
               <div
                 className="modal fade"
-                id={`exampleModal${x.id}`}
+                id={`exampleModal${story.id}`}
                 tabindex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
@@ -114,14 +115,14 @@ export default function data() {
                 <Box
                   component="form"
                   noValidate
-                  onSubmit={(e) => handleSubmit(e, x.id)}
+                  onSubmit={(e) => handleSubmit(e, story.id)}
                   sx={{ mt: 3 }}
                 >
                   <div className="modal-dialog">
                     <div className="modal-content p-5">
                       <div className="modal-header">
                         <h1 className="modal-title fs-5" id="exampleModalLabel">
-                           description
+                          story description
                         </h1>
                         <button
                           type="button"
@@ -131,7 +132,7 @@ export default function data() {
                         ></button>
                       </div>
                       <div className="modal-body">
-                        <div className="mb-3">{x.post.content}</div>
+                        <div className="mb-3">{story.content}</div>
                       </div>
                       <div className="modal-footer">
                         <button
