@@ -36,7 +36,7 @@ export default function data() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/stories")
+      .get("http://localhost:8000/api/contact/all")
       .then((res) => {
         // console.log(res.data);
         setStory(res.data);
@@ -49,7 +49,7 @@ export default function data() {
   function handleDelete(id) {
     if (confirm("Are you sure you want to delete")) {
       axios
-        .delete(`http://localhost:8000/api/deleteStory/${id}`)
+        .delete(`http://localhost:8000/api/contact/${id}`)
         .then((res) => {
           console.log(res);
 
