@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from 'sweetalert2'
 function EditProfile(props) {
@@ -13,8 +13,12 @@ function EditProfile(props) {
   const [userEmail, setUserEmail] = React.useState("");
   const [role, setRole] = React.useState("");
   const [premium, setPremium] = React.useState("");
+  const nav=useNavigate('')
   const { id } = useParams();
   console.log(id);
+  const handleClose=()=>{
+    nav('/profile')
+  }
   function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -64,15 +68,10 @@ function EditProfile(props) {
                   <div className="modal-dialog">
                     <div className="modal-content p-5">
                       <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="exampleModalLabel">
+                        <h1 className="modal-title text-center fs-5" id="exampleModalLabel">
                           Edit User info
                         </h1>
-                        <button
-                          type="button"
-                          className="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
+                       
                       </div>
                       <div className="modal-body">
                         {/* <form onSubmit={handleSubmit}> */}
@@ -156,10 +155,10 @@ function EditProfile(props) {
                         {/* </form> */}
                       </div>
                       <div className="modal-footer">
-                        <button
+                  <button
+                    onClick={()=>handleClose()}
                           type="button"
                           className="btn btn-secondary publishTourBtn"
-                          data-bs-dismiss="modal"
                         >
                           Close
                         </button>

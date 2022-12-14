@@ -22,12 +22,14 @@ import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
+import MarkAsUnreadIcon from '@mui/icons-material/MarkAsUnread';
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
@@ -43,6 +45,8 @@ function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [users, setUsers] = React.useState([]);
   const [stories, setStories] = React.useState([]);
+  const [Inqueries, setInqueries] = React.useState([])
+  const [Post, setPost] = React.useState([])
 
   useEffect(() => {
     axios
@@ -64,6 +68,29 @@ function Dashboard() {
       .catch((err) => {
         console.log(err);
       });
+    
+      axios
+      .get("http://localhost:8000/api/contact/all")
+      .then((res) => {
+        console.log(res.data);
+        setInqueries(res.data.messages);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    
+      axios
+      .get("http://localhost:8000/api/posts")
+      .then((res) => {
+        // console.log(res.data);
+        setPost(res.data);
+        console.log(res.data.posts);
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    
   }, []);
   return (
     <DashboardLayout>
@@ -91,7 +118,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
-                icon="weekend"
+                icon={<HistoryEduIcon />}
                 title="Stories"
                 count={stories.length}
                 percentage={
@@ -107,9 +134,9 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Games"
-                count="15"
+                icon={<MarkAsUnreadIcon size="medium"/>}
+                title="Inquires"
+                count={Inqueries.length}
                 percentage={
                   {
                     // color: "success",
@@ -124,9 +151,9 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
+                icon={<DynamicFeedIcon/>}
+                title="Posts"
+                count={Post.length}
                 percentage={
                   {
                     // color: "success",
