@@ -29,26 +29,20 @@ import * as React from "react";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { readMessage, deleteMessage } from "../../store/features/contactSlice";
+import { fetchStores, deleteMessage } from "../../store/features/contactSlice";
 
 // Images
 
 export default function data() {
-  const [Story, setStory] = React.useState([]);
-  const messages = useSelector(state => state.contact)
+  const [contacts , setContacts] = React.useState()
+  const messages = useSelector(state => state.contact.messages)
   const dispatch = useDispatch()
-
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/contact/all")
-      .then((res) => {
-        console.log(res.data);
-        setStory(res.data.messages);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    dispatch(fetchStores()); 
+    setContacts(messages)
+    console.log(contacts);
+  }, [dispatch]);
+  
   return {
     columns: [
       { Header: "NAME", accessor: "ID", width: "45%", align: "left" },
@@ -57,7 +51,8 @@ export default function data() {
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: Story?.map((story) => {
+
+    rows: messages?.map((story) => {
       return {
         ID: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
@@ -75,7 +70,8 @@ export default function data() {
             <div className="d-flex flex-row-reverse mt-3">
               <p className="">
                 <button
-                  onClick={(e) => dispatch(deleteMessage(story.id))}
+                value={story.id}
+                  onClick={(e) => dispatch(deleteMessage(e.target.value))}
                   type="button"
                   className="btn btn-danger text-white text-decoration-nsone m-1"
                 >

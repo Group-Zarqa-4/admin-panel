@@ -3,16 +3,20 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const baseUrl = "http://localhost";
-const fetchStores = createAsyncThunk("stores/fetchStores", async (userId, thunkAPI) => {
-  const response = await axios.get(baseUrl);
-  return response.data;
+export const fetchStores = createAsyncThunk("contact/fetchStores", async () => {
+  try {
+    const response = await axios.get("http://localhost:8000/api/contact/all");
+    return response.data.messages;
+  } catch ($e) {
+    console.log($e);
+  }
 });
 
 const initialState = {
   name: "",
   email: "",
   content: "",
+  messages: [],
 };
 const contactSlice = createSlice({
   name: "contact",
@@ -27,7 +31,10 @@ const contactSlice = createSlice({
         Swal.fire(response.data.message);
       });
     },
-    readMessage: (state, { payload }) => {},
+    // readMessage: (state) => {
+    //   state.messages = fetchStores();
+    //   console.log(state.messages);
+    // },
     deleteMessage: ({ payload }) => {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -49,8 +56,9 @@ const contactSlice = createSlice({
         })
         .then((result) => {
           if (result.isConfirmed) {
+            console.log(payload);
             axios
-              .delete(`http://localhost:8000/api/deleteStory/${payload.id}`)
+              .delete(`http://localhost:8000/api/contact/${payload}`)
               .then((res) => {
                 console.log(res);
                 swalWithBootstrapButtons.fire("Deleted!", res.data.message, "success");
@@ -68,10 +76,20 @@ const contactSlice = createSlice({
     },
   },
   extraReducers: {
-    // [fetchStores.pending]
+    [fetchStores.pending]: (state, action) => {
+      state.status = "Loading...";
+    },
+    [fetchStores.fulfilled]: (state, action) => {
+      //   state.messages = JSON.parse(JSON.stringify(payload.messages));
+      state.messages = state.messages.concat(action.payload);
+      console.log(state.messages);
+    },
+    [fetchStores.rejected]: (state, action) => {
+      state.status = "something went wrong";
+    },
   },
 });
 
-export const { createMessage, readMessage, deleteMessage } = contactSlice.actions;
+export const { createMessage, deleteMessage } = contactSlice.actions;
 
 export default contactSlice.reducer;
