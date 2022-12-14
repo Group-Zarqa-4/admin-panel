@@ -38,7 +38,7 @@ export default function data() {
     axios
       .get("http://localhost:8000/api/comments")
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setComments(res.data);
       })
       .catch((err) => {
@@ -67,7 +67,7 @@ export default function data() {
     columns: [
       { Header: "ID", accessor: "ID", width: "45%", align: "left" },
       { Header: "userid", accessor: "userid", align: "center" },
-      { Header: "storyid", accessor: "storyid", align: "center" },
+      { Header: "created_at", accessor: "storyid", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
@@ -81,7 +81,7 @@ export default function data() {
         userid: <MDBox ml={-1}>{comment.user_id}</MDBox>,
         storyid: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {comment.story_id}
+            {comment.created_at}
           </MDTypography>
         ),
         action: (

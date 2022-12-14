@@ -37,7 +37,6 @@ import Header from "layouts/profile/components/Header";
 // Data
 // Images
 
-
 import axios from "axios";
 import { useEffect,useState } from "react";
 function Overview() {
@@ -76,7 +75,7 @@ useEffect(() => {
                   fullName:user.name,
                   mobile: "(44) 123 1234 123",
                   email: user.email,
-                  location: "",
+                 
                 }}
                 action={{ route:`/EditProfile/${user.id}` , tooltip: "Edit Profile" }}
                 shadow={false}
