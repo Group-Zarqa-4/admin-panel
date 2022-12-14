@@ -43,6 +43,9 @@ export default function data() {
     console.log(contacts);
   }, [dispatch]);
   
+
+
+  
   return {
     columns: [
       { Header: "NAME", accessor: "ID", width: "45%", align: "left" },
