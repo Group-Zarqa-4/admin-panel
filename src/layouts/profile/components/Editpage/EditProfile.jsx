@@ -23,6 +23,7 @@ function EditProfile(props) {
     data.append("email", userEmail);
     data.append("role", role);
     data.append("is_premium", premium);
+    
     Swal.fire({
       title: 'Do you want to save the changes?',
       showDenyButton: true,
