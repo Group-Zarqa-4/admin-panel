@@ -95,14 +95,14 @@ const routes = [
     route: "/Posts",
     component: <Posts/>,
   },
-  {
-    type: "collapse",
-    name: "Inquiries",
-    key: "Inquiries",
-   icon:<ArticleIcon/>,
-    route: "/Inquiries",
-    component: <Contactus/>,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Inquiries",
+  //   key: "Inquiries",
+  //  icon:<ArticleIcon/>,
+  //   route: "/Inquiries",
+  //   component: <Contactus/>,
+  // },
   {
     type: "collapse",
     name: "Profile",

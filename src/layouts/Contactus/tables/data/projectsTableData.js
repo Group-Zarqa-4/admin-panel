@@ -28,11 +28,15 @@ import axios from "axios";
 import * as React from "react";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { readMessage, deleteMessage } from "../store/features/contactSlice";
 
 // Images
 
 export default function data() {
   const [Story, setStory] = React.useState([]);
+  const messages = useSelector(state => state.contact)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     axios
@@ -45,24 +49,6 @@ export default function data() {
         console.log(err);
       });
   }, []);
-  console.log(Story);
-  function handleDelete(id) {
-    if (confirm("Are you sure you want to delete")) {
-      axios
-        .delete(`http://localhost:8000/api/deleteStory/${id}`)
-        .then((res) => {
-          console.log(res);
-
-          setTimeout(() => {
-            window.location.reload(false);
-          }, 100);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }
-
   return {
     columns: [
       { Header: "ID", accessor: "ID", width: "45%", align: "left" },
@@ -89,7 +75,7 @@ export default function data() {
             <div className="d-flex flex-row-reverse mt-3">
               <p className="">
                 <button
-                  onClick={(e) => handleDelete(story.id)}
+                  onClick={(e) => dispatch(deleteMessage(story.id))}
                   type="button"
                   className="btn btn-danger text-white text-decoration-nsone m-1"
                 >
