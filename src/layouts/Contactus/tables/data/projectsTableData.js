@@ -29,7 +29,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { readMessage, deleteMessage } from "../store/features/contactSlice";
+import { readMessage, deleteMessage } from "../../store/features/contactSlice";
 
 // Images
 
@@ -40,10 +40,10 @@ export default function data() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/stories")
+      .get("http://localhost:8000/api/contact/all")
       .then((res) => {
-        // console.log(res.data);
-        setStory(res.data);
+        console.log(res.data);
+        setStory(res.data.messages);
       })
       .catch((err) => {
         console.log(err);
@@ -51,9 +51,9 @@ export default function data() {
   }, []);
   return {
     columns: [
-      { Header: "ID", accessor: "ID", width: "45%", align: "left" },
-      { Header: "userid", accessor: "userid", align: "center" },
-      { Header: "storyid", accessor: "storyid", align: "center" },
+      { Header: "NAME", accessor: "ID", width: "45%", align: "left" },
+      { Header: "CREATED AT", accessor: "userid", align: "center" },
+      { Header: "EMAIL", accessor: "storyid", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
@@ -61,13 +61,13 @@ export default function data() {
       return {
         ID: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {story.id}
+            {story.name}
           </MDTypography>
         ),
-        userid: <MDBox ml={-1}>{story.user_id}</MDBox>,
+        userid: <MDBox ml={-1}>{story.created_at}</MDBox>,
         storyid: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {story.story_id}
+            {story.email}
           </MDTypography>
         ),
         action: (
@@ -108,7 +108,7 @@ export default function data() {
                     <div className="modal-content p-5">
                       <div className="modal-header">
                         <h1 className="modal-title fs-5" id="exampleModalLabel">
-                          story description
+                          Inquiry Content
                         </h1>
                         <button
                           type="button"

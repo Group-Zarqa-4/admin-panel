@@ -29,7 +29,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/Stories/tables/data/projectsTableData";
+import authorsTableData from "layouts/Contactus/tables/data/projectsTableData";
 
 function Tables() {
   const { columns, rows } = authorsTableData();
@@ -52,7 +52,7 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Stories Table
+                  Inquiries Table
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>

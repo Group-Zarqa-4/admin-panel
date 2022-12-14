@@ -23,7 +23,7 @@ function PlatformSettings() {
     <Card sx={{ boxShadow: "none" }}>
       <MDBox p={2}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          platform settings
+           settings
         </MDTypography>
       </MDBox>
     </Card>

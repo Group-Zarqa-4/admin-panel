@@ -83,7 +83,7 @@ export default function data() {
     // console.log(data.get("is_premium"));
 
     axios
-      .post(`http://localhost:8000/api/updateuser/${id}`, data)
+      .post(`http://localhost:8000/api/updateUser/${id}`, data)
       .then((res) => {
         setTimeout(() => {
           window.location.reload(false);
