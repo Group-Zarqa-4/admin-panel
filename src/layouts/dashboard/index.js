@@ -109,7 +109,7 @@ function Dashboard() {
               />
             </MDBox>
           </Grid>
-          {/* <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon={<MarkAsUnreadIcon size="medium"/>}
@@ -124,7 +124,7 @@ function Dashboard() {
                 }
               />
             </MDBox>
-          </Grid> */}
+          </Grid>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
@@ -144,8 +144,8 @@ function Dashboard() {
           </Grid>
         </Grid>
         <MDBox mt={4.5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid container spacing={3}> */}
+            {/* <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
@@ -155,8 +155,8 @@ function Dashboard() {
                   chart={reportsBarChartData}
                 />
               </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
+            </Grid> */}
+            {/* <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
@@ -170,8 +170,8 @@ function Dashboard() {
                   chart={sales}
                 />
               </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
+            </Grid> */}
+            {/* <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
@@ -181,8 +181,8 @@ function Dashboard() {
                   chart={tasks}
                 />
               </MDBox>
-            </Grid>
-          </Grid>
+            </Grid> */}
+          {/* </Grid> */}
         </MDBox>
       </MDBox>
     </DashboardLayout>

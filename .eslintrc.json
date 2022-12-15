@@ -8,9 +8,6 @@
     "airbnb",
     "prettier"
   ],
-    // suppress errors for missing 'import React' in files
-
-
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -27,9 +24,4 @@
       }
     }
   }
-  ,"rules": {
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], //should add ".ts" if typescript project
-  }
-  
 }
