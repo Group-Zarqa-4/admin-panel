@@ -1,7 +1,7 @@
 {
   "name": "material-dashboard-2-react",
   "version": "2.1.0",
-  "private": true,
+  "private": false,
   "author": "Creative Tim",
   "license": "See license in https://www.creative-tim.com/license",
   "description": "React version of Material Dashboard 2 by Creative Tim",
@@ -31,6 +31,7 @@
     "bootstrap": "^5.2.3",
     "chart.js": "3.4.1",
     "chroma-js": "2.4.2",
+    "eslint-config-airbnb": "^19.0.4",
     "prop-types": "15.8.1",
     "react": "17.0.2",
     "react-bootstrap": "^2.7.0",
@@ -48,9 +49,9 @@
     "yup": "0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "set DISABLE_ESLINT_PLUGIN=true && react-scripts start",
+    "build": "set DISABLE_ESLINT_PLUGIN=true && react-scripts build",
+    "test": "set DISABLE_ESLINT_PLUGIN=true && react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
   },
@@ -73,10 +74,13 @@
     ]
   },
   "devDependencies": {
-    "eslint": "8.8.0",
-    "eslint-config-airbnb": "19.0.4",
+    "eslint": "^8.0.0",
+    "eslint-config-defaults": "^9.0.0",
+    "eslint-config-google": "^0.8.0",
     "eslint-config-prettier": "8.3.0",
+    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-import": "2.25.4",
+    "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "^7.28.0",
