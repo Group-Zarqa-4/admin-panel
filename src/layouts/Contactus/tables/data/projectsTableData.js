@@ -41,14 +41,13 @@ export default function data() {
     dispatch(fetchStores()); 
     setContacts(messages)
     console.log(contacts);
-  }, [dispatch]);
+  }, [dispatch,deleteMessage]);
   
-
 
   
   return {
     columns: [
-      { Header: "NAME", accessor: "ID", width: "45%", align: "left" },
+      { Header: "NAME", accessor: "ID", width: "25%", align: "left" },
       { Header: "CREATED AT", accessor: "userid", align: "center" },
       { Header: "EMAIL", accessor: "storyid", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
@@ -71,16 +70,18 @@ export default function data() {
         action: (
           <>
             <div className="d-flex flex-row-reverse mt-3">
+             
               <p className="">
                 <button
-                value={story.id}
-                  onClick={(e) => dispatch(deleteMessage(e.target.value))}
+               key={story.id}
+                  onClick={() => dispatch(deleteMessage( story.id))}
                   type="button"
                   className="btn btn-danger text-white text-decoration-nsone m-1"
                 >
                   Delete
                 </button>
                 <Link
+                  key={story.id}
                   type="button"
                   className="btn btn-warning text-white text-decoration-nsone m-1"
                   data-bs-toggle="modal"
@@ -100,7 +101,7 @@ export default function data() {
                 <Box
                   component="form"
                   noValidate
-                  onSubmit={(e) => handleSubmit(e, story.id)}
+                 
                   sx={{ mt: 3 }}
                 >
                   <div className="modal-dialog">

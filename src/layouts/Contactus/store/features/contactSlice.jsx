@@ -35,7 +35,8 @@ const contactSlice = createSlice({
     //   state.messages = fetchStores();
     //   console.log(state.messages);
     // },
-    deleteMessage: ({ payload }) => {
+    deleteMessage: ({ id }) => {
+      console.log(id);
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: "btn btn-success",
@@ -56,9 +57,9 @@ const contactSlice = createSlice({
         })
         .then((result) => {
           if (result.isConfirmed) {
-            console.log(payload);
+           
             axios
-              .delete(`http://localhost:8000/api/contact/${payload}`)
+              .delete(`http://localhost:8000/api/contact/${id}`)
               .then((res) => {
                 console.log(res);
                 swalWithBootstrapButtons.fire("Deleted!", res.data.message, "success");
