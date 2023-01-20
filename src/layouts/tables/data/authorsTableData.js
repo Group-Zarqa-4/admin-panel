@@ -27,6 +27,7 @@ import { Link } from "@mui/material";
 import { Box } from "@mui/material";
 import { useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 // import { useCallback } from "react";
 
 // import DialogActions from "@mui/material/DialogActions";
@@ -55,10 +56,10 @@ export default function data() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/users")
+      .get("http://localhost:8000/api/getallusers")
       .then((res) => {
-        // console.log(res.data);
-        setUsers(res.data);
+        console.log(res.data.users);
+        setUsers(res.data.users);
       })
       .catch((err) => {
         console.log(err);
@@ -96,20 +97,32 @@ export default function data() {
   }
 
   function handleDelete(id) {
-    if (confirm("Are you sure you want to delete")) {
-      axios
-        .delete(`http://localhost:8000/api/deleteUser/${id}`)
-        .then((res) => {
-          console.log(res);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
 
-          setTimeout(() => {
-            window.location.reload(false);
-          }, 100);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+        axios
+          .delete(`http://localhost:8000/api/deleteUser/${id}`)
+          .then((res) => {
+            console.log(res);
+
+            setTimeout(() => {
+              window.location.reload(false);
+            }, 100);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
   }
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -133,11 +146,17 @@ export default function data() {
 
     rows: users?.map((user) => {
       return {
-        Username: <Author image={`${user.image}`} name={`${user.name}`} email={`${user.email}`} />,
+        Username: (
+          <Author
+            image={require(`C:/Apache24/htdocs/Masterpiece/backup/src/images/${user.user_image}`)}
+            name={`${user.user_name}`}
+            email={`${user.user_email}`}
+          />
+        ),
         status: <MDBox ml={-1}>{user.id}</MDBox>,
         Role: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {user.role}
+            {user.user_role}
           </MDTypography>
         ),
         action: (

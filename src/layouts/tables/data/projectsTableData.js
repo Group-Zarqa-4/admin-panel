@@ -36,10 +36,10 @@ export default function data() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/comments")
+      .get("http://localhost:8000/api/getalltours")
       .then((res) => {
-        console.log(res.data);
-        setComments(res.data);
+        console.log(res.data.tours);
+        setComments(res.data.tours);
       })
       .catch((err) => {
         console.log(err);
@@ -66,8 +66,10 @@ export default function data() {
   return {
     columns: [
       { Header: "ID", accessor: "ID", width: "45%", align: "left" },
-      { Header: "userid", accessor: "userid", align: "center" },
-      { Header: "created_at", accessor: "storyid", align: "center" },
+      { Header: "Username", accessor: "userid", align: "center" },
+      { Header: "Destination", accessor: "storyid", align: "center" },
+      { Header: "Tour Date", accessor: "TourDate", align: "center" },
+
       { Header: "action", accessor: "action", align: "center" },
     ],
 
@@ -78,10 +80,19 @@ export default function data() {
             {comment.id}
           </MDTypography>
         ),
-        userid: <MDBox ml={-1}>{comment.user_id}</MDBox>,
+        userid: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {comment.user_name}
+          </MDTypography>
+        ),
         storyid: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {comment.created_at}
+            {comment.destination_name}
+          </MDTypography>
+        ),
+        TourDate: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {comment.tour_date}
           </MDTypography>
         ),
         action: (
@@ -97,11 +108,11 @@ export default function data() {
                 </button>
                 <Link
                   type="button"
-                  className="btn btn-warning text-white text-decoration-nsone m-1"
+                  className="btn btn-info text-white text-decoration-nsone m-1"
                   data-bs-toggle="modal"
                   data-bs-target={`#exampleModal${comment.id}`}
                 >
-                  View
+                  Edit
                 </Link>
               </p>
 

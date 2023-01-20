@@ -43,15 +43,13 @@ import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
-import Stories from "../src/layouts/Stories/tables"
-import Posts from "../src/layouts/Posts/tables"
-import Contactus from "../src/layouts/Contactus/tables"
-
-
+import Stories from "../src/layouts/Stories/tables";
+import Posts from "../src/layouts/Posts/tables";
+import Contactus from "../src/layouts/Contactus/tables";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import ArticleIcon from '@mui/icons-material/Article';
+import ArticleIcon from "@mui/icons-material/Article";
 import EditProfile from "layouts/profile/components/Editpage/EditProfile.jsx";
 
 const routes = [
@@ -73,55 +71,36 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Comments",
-    key: "comments",
+    name: "Tours",
+    key: "tours",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/comments",
+    route: "/tours",
     component: <Billing />,
   },
   {
     type: "collapse",
-    name: "Stories",
-    key: "Stories",
-   icon:<ArticleIcon/>,
-    route: "/Stories",
-    component: <Stories/>,
+    name: "Booked Tours",
+    key: "booked",
+    icon: <ArticleIcon />,
+    route: "/booked",
+    component: <Stories />,
   },
   {
     type: "collapse",
-    name: "Posts",
-    key: "Posts",
-   icon:<ArticleIcon/>,
-    route: "/Posts",
-    component: <Posts/>,
+    name: "Destination",
+    key: "destinations",
+    icon: <ArticleIcon />,
+    route: "/destinations",
+    component: <Posts />,
   },
-  {
-    type: "collapse",
-    name: "Inquiries",
-    key: "Inquiries",
-   icon:<ArticleIcon/>,
-    route: "/Inquiries",
-    component: <Contactus/>,
-  },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
+
   {
     type: "collapse",
     name: "Exit dashboard",
     key: "sign-out",
     icon: <Icon fontSize="small">login</Icon>,
-    route:"/sign-out",
+    route: "/sign-out",
     component: <SignIn />,
-  },
-  {
-    route: "/EditProfile/:id",
-    component: <EditProfile/> ,
   },
 ];
 

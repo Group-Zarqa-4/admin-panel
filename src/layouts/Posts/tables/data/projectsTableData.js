@@ -28,6 +28,7 @@ import axios from "axios";
 import * as React from "react";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
+import Swal from "sweetalert2";
 
 // Images
 
@@ -36,12 +37,10 @@ export default function data() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/posts")
+      .get("http://localhost:8000/api/destinations")
       .then((res) => {
         // console.log(res.data);
-        setPost(res.data);
-        console.log(res.data.posts);
-        
+        setPost(res.data.destinations);
       })
       .catch((err) => {
         console.log(err);
@@ -49,38 +48,59 @@ export default function data() {
   }, []);
   console.log(posts);
   function handleDelete(id) {
-    if (confirm("Are you sure you want to delete")) {
-      axios
-        .delete(`http://localhost:8000/api/deletePost/${id}`)
-        .then((res) => {
-          setTimeout(() => {
-            window.location.reload(false);
-          }, 100);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+        axios
+          .delete(`http://localhost:8000/api/deleteUser/${id}`)
+          .then((res) => {
+            console.log(res);
+
+            setTimeout(() => {
+              window.location.reload(false);
+            }, 100);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
   }
 
   return {
     columns: [
-      { Header: "Name", accessor: "ID", width: "45%", align: "left" },
-      { Header: "Post", accessor: "storyid", align: "center" },
+      { Header: "ID", accessor: "ID", align: "center" },
+      { Header: "Destination Name", accessor: "Name", width: "45%", align: "left" },
+      { Header: "Number of tours", accessor: "storyid", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: posts?.map((x,array) => {
+    rows: posts?.map((x, array) => {
       return {
         ID: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {x.post.user.name}
+            {x.id}
           </MDTypography>
         ),
-        userid: <MDBox ml={-1}>{x.post.user.avatar}</MDBox>,
+
+        Name: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {x.destination_name}
+          </MDTypography>
+        ),
+        userid: <MDBox ml={-1}>{x.destination_name}</MDBox>,
         storyid: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {x.post.user.email}
+            {x.num_published}
           </MDTypography>
         ),
         action: (
@@ -88,20 +108,12 @@ export default function data() {
             <div className="d-flex flex-row-reverse mt-3">
               <p className="">
                 <button
-                  onClick={(e) => handleDelete(x.post.id)}
+                  onClick={(e) => handleDelete(x.id)}
                   type="button"
                   className="btn btn-danger text-white text-decoration-nsone m-1"
                 >
                   Delete
                 </button>
-                <Link
-                  type="button"
-                  className="btn btn-warning text-white text-decoration-nsone m-1"
-                  data-bs-toggle="modal"
-                  data-bs-target={`#exampleModal${x.id}`}
-                >
-                  View Post
-                </Link>
               </p>
 
               <div
@@ -121,7 +133,7 @@ export default function data() {
                     <div className="modal-content p-5">
                       <div className="modal-header">
                         <h1 className="modal-title fs-5" id="exampleModalLabel">
-                           description
+                          description
                         </h1>
                         <button
                           type="button"
@@ -131,7 +143,7 @@ export default function data() {
                         ></button>
                       </div>
                       <div className="modal-body">
-                        <div className="mb-3">{x.post.content}</div>
+                        <div className="mb-3"></div>
                       </div>
                       <div className="modal-footer">
                         <button

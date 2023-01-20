@@ -22,14 +22,14 @@ import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
-import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
-import MarkAsUnreadIcon from '@mui/icons-material/MarkAsUnread';
+import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
+import MarkAsUnreadIcon from "@mui/icons-material/MarkAsUnread";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
@@ -45,30 +45,49 @@ function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [users, setUsers] = React.useState([]);
   const [stories, setStories] = React.useState([]);
-  const [Inqueries, setInqueries] = React.useState([])
-  const [Post, setPost] = React.useState([])
+  const [Inqueries, setInqueries] = React.useState([]);
+  const [Post, setPost] = React.useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/users")
+      .get("http://localhost:8000/api/getallusers")
       .then((res) => {
         // console.log(res.data);
-        setUsers(res.data);
+        setUsers(res.data.users);
       })
       .catch((err) => {
         console.log(err);
       });
 
     axios
-      .get("http://localhost:8000/api/stories")
+      .get("http://localhost:8000/api/getalltours")
       .then((res) => {
         console.log(res.data);
-        setStories(res.data.stories);
+        setStories(res.data.tours);
       })
       .catch((err) => {
         console.log(err);
       });
-      
+
+    axios
+      .get("http://localhost:8000/api/getallbookedtours")
+      .then((res) => {
+        console.log(res.data);
+        setInqueries(res.data.BookedTours);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get("http://localhost:8000/api/destinations")
+      .then((res) => {
+        console.log(res.data);
+        setPost(res.data.destinations);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <DashboardLayout>
@@ -97,7 +116,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon={<HistoryEduIcon />}
-                title="Stories"
+                title="Tours"
                 count={stories.length}
                 percentage={
                   {
@@ -112,8 +131,8 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon={<MarkAsUnreadIcon size="medium"/>}
-                title="Inquires"
+                icon={<MarkAsUnreadIcon size="medium" />}
+                title="Booked Tours"
                 count={Inqueries.length}
                 percentage={
                   {
@@ -129,8 +148,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
-                icon={<DynamicFeedIcon/>}
-                title="Posts"
+                icon={<DynamicFeedIcon />}
+                title="Destinations"
                 count={Post.length}
                 percentage={
                   {
@@ -145,7 +164,7 @@ function Dashboard() {
         </Grid>
         <MDBox mt={4.5}>
           {/* <Grid container spacing={3}> */}
-            {/* <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
@@ -156,7 +175,7 @@ function Dashboard() {
                 />
               </MDBox>
             </Grid> */}
-            {/* <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
@@ -171,7 +190,7 @@ function Dashboard() {
                 />
               </MDBox>
             </Grid> */}
-            {/* <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"

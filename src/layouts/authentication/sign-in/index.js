@@ -49,15 +49,10 @@ function Basic() {
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   useEffect(() => {
-    window.location.href = "http://localhost:3000"
-  },[rememberMe])
+    window.location.href = "http://localhost:3000/userprofile/10";
+  }, [rememberMe]);
 
-  return (
-
-    <>
-      </>
-
-  );
+  return <></>;
 }
 
 export default Basic;

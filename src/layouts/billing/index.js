@@ -58,12 +58,12 @@ function Billing() {
             py={3}
             px={2}
             variant="gradient"
-            bgColor="info"
+            bgColor="warning"
             borderRadius="lg"
-            coloredShadow="info"
+            coloredShadow="warning"
           >
             <MDTypography variant="h6" color="white">
-              Comments Table
+              Tours Table
             </MDTypography>
           </MDBox>
           <MDBox pt={3}>

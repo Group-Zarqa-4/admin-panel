@@ -36,10 +36,10 @@ export default function data() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/stories")
+      .get("http://localhost:8000/api/getallbookedtours")
       .then((res) => {
-        console.log(res.data);
-        setStory(res.data.stories);
+        console.log(res.data.BookedTours);
+        setStory(res.data.BookedTours);
       })
       .catch((err) => {
         console.log(err);
@@ -65,8 +65,9 @@ export default function data() {
   return {
     columns: [
       { Header: "ID", accessor: "ID", width: "45%", align: "left" },
-      { Header: "Title", accessor: "userid", align: "center" },
-      { Header: "Author", accessor: "storyid", align: "center" },
+      { Header: "Tourist ID", accessor: "userid", align: "center" },
+      { Header: "Advisor ID", accessor: "storyid", align: "center" },
+      { Header: "Price", accessor: "Price", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
@@ -77,10 +78,19 @@ export default function data() {
             {comment.id}
           </MDTypography>
         ),
-        userid: <MDBox ml={-1}>{comment.title}</MDBox>,
+        userid: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {comment.user_id}
+          </MDTypography>
+        ),
         storyid: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {comment.author}
+            {comment.user_id2}
+          </MDTypography>
+        ),
+        Price: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {comment.tour_price} JOD
           </MDTypography>
         ),
         action: (
@@ -94,14 +104,6 @@ export default function data() {
                 >
                   Delete
                 </button>
-                <Link
-                  type="button"
-                  className="btn btn-warning text-white text-decoration-nsone m-1"
-                  data-bs-toggle="modal"
-                  data-bs-target={`#exampleModal${comment.id}`}
-                >
-                  View
-                </Link>
               </p>
 
               <div
@@ -131,7 +133,7 @@ export default function data() {
                         ></button>
                       </div>
                       <div className="modal-body">
-                        <div className="mb-3">{comment.pages[0].text}</div>
+                        <div className="mb-3">{comment.pages}</div>
                       </div>
                       <div className="modal-footer">
                         <button
