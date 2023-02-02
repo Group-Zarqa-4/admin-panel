@@ -26,7 +26,7 @@ import MDProgress from "components/MDProgress";
 import { Link } from "@mui/material";
 import axios from "axios";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import Swal from "sweetalert2";
 
@@ -34,7 +34,7 @@ import Swal from "sweetalert2";
 
 export default function data() {
   const [posts, setPost] = React.useState([]);
-
+  const [deleted, setDeleted] = useState(false);
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/destinations")
@@ -45,7 +45,11 @@ export default function data() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [deleted]);
+
+  // useEffect(() => {
+  //   set
+  // });
   console.log(posts);
   function handleDelete(id) {
     Swal.fire({
@@ -61,13 +65,10 @@ export default function data() {
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
 
         axios
-          .delete(`http://localhost:8000/api/deleteUser/${id}`)
+          .delete(`http://localhost:8000/api/deletedestination/${id}`)
           .then((res) => {
             console.log(res);
-
-            setTimeout(() => {
-              window.location.reload(false);
-            }, 100);
+            setDeleted(!deleted);
           })
           .catch((err) => {
             console.log(err);

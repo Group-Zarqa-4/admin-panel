@@ -28,6 +28,7 @@ import axios from "axios";
 import * as React from "react";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
+import Swal from "sweetalert2";
 
 // Images
 
@@ -46,21 +47,33 @@ export default function data() {
       });
   }, []);
   console.log(comments);
-  function handleDelete(id) {
-    if (confirm("Are you sure you want to delete")) {
-      axios
-        .delete(`http://localhost:8000/api/deleteComment/${id}`)
-        .then((res) => {
-          console.log(res);
-
-          setTimeout(() => {
-            window.location.reload(false);
-          }, 100);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  function handleDeleteTour(id) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        const axiosAuth = "Bearer " + tokens;
+        axios.defaults.headers.common["Authorization"] = axiosAuth;
+        axios
+          .delete(`http://localhost:8000/api/tours/${id}`)
+          .then((res) => {
+            console.log(res);
+            setTimeout(() => {
+              window.location.reload(false);
+            }, 500);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
   }
 
   return {
@@ -100,7 +113,7 @@ export default function data() {
             <div className="d-flex flex-row-reverse mt-3">
               <p className="">
                 <button
-                  onClick={(e) => handleDelete(comment.id)}
+                  onClick={(e) => handleDeleteTour(comment.id)}
                   type="button"
                   className="btn btn-danger text-white text-decoration-nsone m-1"
                 >

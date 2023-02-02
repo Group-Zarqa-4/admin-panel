@@ -68,7 +68,7 @@ export default function data() {
       { Header: "Tourist ID", accessor: "userid", align: "center" },
       { Header: "Advisor ID", accessor: "storyid", align: "center" },
       { Header: "Price", accessor: "Price", align: "center" },
-      { Header: "action", accessor: "action", align: "center" },
+      { Header: "Date", accessor: "Date", align: "center" },
     ],
 
     rows: Story?.map((comment) => {
@@ -93,17 +93,18 @@ export default function data() {
             {comment.tour_price} JOD
           </MDTypography>
         ),
-        action: (
+        Date: (
           <>
             <div className="d-flex flex-row-reverse mt-3">
               <p className="">
-                <button
+                {/* <button
                   onClick={(e) => handleDelete(comment.id)}
                   type="button"
                   className="btn btn-danger text-white text-decoration-nsone m-1"
                 >
                   Delete
-                </button>
+                </button> */}
+                {comment.created_at}
               </p>
 
               <div

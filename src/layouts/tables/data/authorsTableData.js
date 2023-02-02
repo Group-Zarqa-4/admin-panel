@@ -28,6 +28,7 @@ import { Box } from "@mui/material";
 import { useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { ValidationError } from "yup";
 // import { useCallback } from "react";
 
 // import DialogActions from "@mui/material/DialogActions";
@@ -52,8 +53,13 @@ export default function data() {
   const [userName, setUserName] = React.useState("");
   const [userEmail, setUserEmail] = React.useState("");
   const [role, setRole] = React.useState("");
-  const [premium, setPremium] = React.useState("");
 
+  const initialData = {
+    userNameErr: "",
+    emailErr: "",
+    userRoleErr: "",
+  };
+  const [editErr, setEditErr] = React.useState(initialData);
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/getallusers")
@@ -71,14 +77,30 @@ export default function data() {
   // console.log(role);
 
   // const
+  const validate = (userName, userEmail, role) => {
+    const errors = {};
+    if (!userName) {
+      errors.userNameErr = "User Name field is required";
+    }
+    if (!userEmail) {
+      errors.emailErr = "Email field is required";
+    }
+    if (!role) {
+      errors.userRoleErr = "Role field is required";
+    }
+
+    setEditErr(errors);
+  };
+
   function handleSubmit(event, id) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    data.append("name", userName);
-    data.append("email", userEmail);
-    data.append("role", role);
-    data.append("is_premium", premium);
+    data.append("user_name", userName);
+    data.append("user_email", userEmail);
+    data.append("user_role", role);
+
+    validate(userName, userEmail, role);
 
     // console.log(data.get("role"));
     // console.log(data.get("is_premium"));
@@ -86,9 +108,11 @@ export default function data() {
     axios
       .post(`http://localhost:8000/api/updateUser/${id}`, data)
       .then((res) => {
+        Swal.fire("Updated!", "User account has been updated.", "success");
+
         setTimeout(() => {
           window.location.reload(false);
-        }, 100);
+        }, 500);
         console.log(res);
       })
       .catch((err) => {
@@ -107,7 +131,7 @@ export default function data() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        Swal.fire("Deleted!", "User has been deleted.", "success");
 
         axios
           .delete(`http://localhost:8000/api/deleteUser/${id}`)
@@ -208,6 +232,8 @@ export default function data() {
                       </div>
                       <div className="modal-body">
                         {/* <form onSubmit={handleSubmit}> */}
+                        <p style={{ color: "red" }}> {editErr.userNameErr}</p>
+
                         <div className="mb-3">
                           <label for="username" className="form-label">
                             User Name
@@ -223,6 +249,7 @@ export default function data() {
                             }}
                           />
                         </div>
+                        <p style={{ color: "red" }}> {editErr.emailErr}</p>
 
                         <div className="mb-3">
                           <label for="email" className="form-label">
@@ -239,6 +266,8 @@ export default function data() {
                             // value={user.email}
                           />
                         </div>
+                        <p style={{ color: "red" }}> {editErr.userRoleErr}</p>
+
                         <div className="mb-3">
                           <label for="role" className="form-label">
                             Role
@@ -253,8 +282,9 @@ export default function data() {
                             <option value="Select Premium" disabled selected hidden>
                               Select Role
                             </option>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Tourist">Tourist</option>
+                            <option value="Advisor">Advisor</option>
                           </select>
                           {/* <input
                             onChange={(e) => {
@@ -268,23 +298,6 @@ export default function data() {
                           /> */}
                         </div>
 
-                        <div className="mb-3">
-                          <label for="premium" className="form-label">
-                            premium
-                          </label>
-                          <select
-                            name="premium"
-                            id="premium"
-                            class="form-control"
-                            onChange={(e) => setPremium(e.target.value)}
-                          >
-                            <option value="Select Premium" disabled selected hidden>
-                              Select Premium
-                            </option>
-                            <option value={1}>Yes</option>
-                            <option value={0}>No</option>
-                          </select>
-                        </div>
                         {/* </form> */}
                       </div>
                       <div className="modal-footer">
